@@ -1,0 +1,20 @@
+# datasets and large binaries
+data/
+checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*_executed.ipynb
+
+# OS
+.DS_Store
+Thumbs.db

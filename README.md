@@ -1,7 +1,10 @@
 # Lab I — Multi-View VAE for MNIST and SVHN
 
 Implements a **multi-view variational autoencoder** that learns a shared latent space for
-paired MNIST (grey-scale) and SVHN (colour) digit images.
+paired MNIST (grey-scale) and SVHN (colour) digit images. Two fusion methods are compared:
+**Product of Experts** (MVAE objective) and **Mixture of Experts** (MMVAE objective).
+Evaluation: reconstruction, prior samples, cross-domain generation, coherence measured with
+digit classifiers, linear probes and t-SNE.
 
 ## Quick start
 
@@ -9,8 +12,9 @@ paired MNIST (grey-scale) and SVHN (colour) digit images.
 
 1. Upload the repo to Google Drive or clone it inside Colab.
 2. Open `notebooks/Lab_MultiView_VAE.ipynb` with Colab.
-3. Set `MAX_TRAIN_PAIRS = None` and `EPOCHS = 30` in Section 2 / 4 for full-quality training.
-4. Run all cells (Runtime → Run all).
+3. Runtime → Change runtime type → **T4 GPU**, then Runtime → Run all.
+   On GPU the full dataset (~56k pairs) is used automatically. Both models train in ~25 min total.
+4. Download `checkpoints/` and `report/figures/` before the runtime is closed.
 
 ### Option B — Local CPU
 
@@ -23,14 +27,13 @@ python -m venv .venv
 source .venv/bin/activate
 
 # 2. Install dependencies
-pip install torch torchvision matplotlib scikit-learn jupyter
+pip install -r requirements.txt
 
 # 3. Launch Jupyter and open the notebook
 jupyter lab notebooks/Lab_MultiView_VAE.ipynb
 ```
 
-With the default `MAX_TRAIN_PAIRS = 12_000` the training loop takes **~35 min on a modern CPU**.
-Remove the cap (`None`) or increase `EPOCHS` for better quality at the cost of more time.
+On CPU the notebook uses a 12,000-pair subset automatically (`MAX_TRAIN_PAIRS`). Expect over 1 h for both models.
 
 ### Option C — Execute headlessly (nbconvert)
 
@@ -57,16 +60,14 @@ data/                       ← downloaded datasets (git-ignored)
 checkpoints/                ← model checkpoints (git-ignored)
 ```
 
-## Outputs produced by the notebook
+## Outputs produced by the notebook (`report/figures/`)
 
-| Figure | Content |
-|--------|---------|
-| `01_paired_samples.png` | Example MNIST / SVHN pairs (same digit) |
-| `02_loss_curves.png` | Training loss and ELBO components |
-| `03a_mnist_recon.png` | MNIST within-view reconstruction |
-| `03b_svhn_recon.png` | SVHN within-view reconstruction |
-| `04_prior_samples.png` | Samples from the prior decoded to both views |
-| `05a_cross_m2s.png` | Cross-generation MNIST → SVHN |
-| `05b_cross_s2m.png` | Cross-generation SVHN → MNIST |
-| `06a_tsne_label.png` | t-SNE coloured by digit label |
-| `06b_tsne_view.png` | t-SNE coloured by view (MNIST vs SVHN) |
+| File | Content |
+|------|---------|
+| `01_pairs.png` | Example MNIST / SVHN training pairs |
+| `02_loss.png` | Train / test loss for PoE and MoE |
+| `03_recon_{poe,moe}.png` | Reconstruction from one view and from both views |
+| `04_prior_{poe,moe}.png` | Samples from the prior decoded to both views |
+| `05_cross_{poe,moe}.png` | Cross-generation MNIST → SVHN and SVHN → MNIST |
+| `06_tsne_{poe,moe}.png` | t-SNE: joint latent by digit, unimodal latents by digit and by view |
+| `summary.csv` | All metrics: recon MSE, joint/cross coherence, linear probes |

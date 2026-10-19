@@ -11,3 +11,9 @@ See LAB_STATEMENT.md for the assignment. Deliverables: notebook `notebooks/Lab_M
 - Keep code in complete, runnable cells/files; data goes to `data/` (git-ignored), checkpoints to `checkpoints/`.
 - Must run on Colab GPU as well as locally.
 - Code comments in English; the user (Alfredo) prefers concise answers.
+
+## Current state (v2, Oct 2026)
+- Notebook compares PoE (MVAE objective) vs MoE (MMVAE objective); same nets, `fusion` flag in `MultiViewVAE`.
+- Evaluation: digit-classifier coherence (joint + cross), linear probes, t-SNE; figures + `summary.csv` go to `report/figures/`.
+- Notebook text: simple, clear English (non-native style is fine), short explanations; details go in the report.
+- Datasets cannot be downloaded in the cloud sandbox: test logic with fake data, real runs on Colab GPU.

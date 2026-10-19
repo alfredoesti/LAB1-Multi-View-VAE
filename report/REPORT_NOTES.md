@@ -6,6 +6,22 @@
 
 ---
 
+> **Warning (Oct 19):** the notebook was rewritten (v2). The numbers in Section 3 below come from the
+> old version (12k pairs, PoE only, unimodal posteriors without prior expert). Re-run the notebook and update.
+>
+> **Main changes in v2:**
+> - Unimodal posteriors now also include the prior expert, q(z|x_v) ∝ p(z) q_v(z|x_v), so training and
+>   cross-generation use the same posterior (consistent MVAE).
+> - Added **MoE** fusion (MMVAE objective with stratified sampling: each expert's z reconstructs both views)
+>   and a PoE vs MoE comparison.
+> - Quantitative evaluation with CNN digit classifiers: joint coherence (prior samples) and cross-coherence.
+> - Linear probes on joint / MNIST / SVHN latents + cross probe (train on MNIST latents, test on SVHN latents).
+> - Full dataset on GPU (~56k pairs), test loss per epoch, t-SNE coloured by digit and by view.
+> - All results are collected in `report/figures/summary.csv`.
+>
+> **References to cite:** Kingma & Welling (2014) VAE; Wu & Goodman (2018) MVAE (PoE);
+> Shi et al. (2019) MMVAE (MoE, coherence metrics, MNIST-SVHN pairing).
+
 ## 1. Introduction
 
 We trained a multi-view variational autoencoder (MV-VAE) to learn a shared latent space

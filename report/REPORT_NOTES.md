@@ -19,6 +19,11 @@
 > - Full dataset on GPU (~56k pairs), test loss per epoch, t-SNE coloured by digit and by view.
 > - All results are collected in `report/figures/summary.csv`.
 >
+> **v2.1 fix (Oct 20):** first Colab run of v2 had a dead MNIST decoder (black output for every input, MNIST MSE 0.4112 in both
+> models, cross-coherence 11.35% = share of digit "1"). Cause: `tanh` output saturated at -1 on MNIST's black background, so strokes got no gradient.
+> Fix: linear output layer + likelihood weights (MNIST x3, SVHN x1, as 3072 vs 1024 pixels, like Shi et al. 2019) + automatic dead-decoder check.
+> Good to mention in the report as a lesson / implementation detail. Re-run on Colab and replace all numbers.
+>
 > **References to cite:** Kingma & Welling (2014) VAE; Wu & Goodman (2018) MVAE (PoE);
 > Shi et al. (2019) MMVAE (MoE, coherence metrics, MNIST-SVHN pairing).
 

@@ -6,6 +6,10 @@
 
 ---
 
+> **Final (Oct 22):** final run = v2.2 with `CROSS_UNIMODAL = True` (executed notebook in `notebooks/`, numbers in
+> `report/figures/summary.csv`). The 2-page report was written from that run. Ablation (PoE without cross terms):
+> cross SVHN→MNIST 10.8%, MNIST→SVHN 11.4%, probe SVHN 41.8%.
+>
 > **Warning (Oct 19):** the notebook was rewritten (v2). The numbers in Section 3 below come from the
 > old version (12k pairs, PoE only, unimodal posteriors without prior expert). Re-run the notebook and update.
 >
